@@ -1,0 +1,183 @@
+/* /* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
+/* ----resetEnd---- */
+.container{
+    max-width: 52%;
+}
+.done{
+    text-decoration: line-through;
+}
+.header{
+    height: 54px; 
+    background-color: #fafafa; 
+}
+.title{
+    padding: 16px;
+}
+.date{
+    padding: 16px;
+}
+.filter{
+    padding: 16px;
+    position: relative;
+}
+.action{
+    padding: 16px;
+}
+.grid {
+    display: grid;
+    grid-template-columns: 2fr 0fr 1fr 1fr;
+}
+.todoitem{
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+}
+.Btn{
+
+    margin-top: 15px;
+    border-radius: 2px;
+    padding: 4px 15px;
+    border: 1px solid #d9d9d9;
+}
+.complete{
+    background-color: #1890ff;
+    color: #fff;
+}
+.delete{
+    background-color: #ff7875;
+    margin: 5px;
+    color: #fff;
+}
+.todoitem:hover {
+    background-color: #fafafa;
+}
+
+.todoitem{
+    padding: 16px;
+}
+
+.itemTitle{
+    overflow-wrap: break-word;
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    box-sizing: border-box;
+    margin-top: 0;
+    margin-bottom: .5em;
+}
+
+.itemDate{
+    padding: 16px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+}
+
+.itemAction{
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+.pagination{
+    display: flex;
+    justify-content: flex-end;
+}
+.filter-form{
+    width: 250px;
+    padding: 50%;
+    position: absolute;
+    top: 60px;
+    background-color: #fff;
+    border: 1px solid #000;
+}
+.form-filter-center{
+text-align: center;
+}
+
+.hide{
+    display:none;
+}
+
+.headerAdd{
+    width: 100%;
+    text-align: center;
+}
+
+.addBtn{
+    width: 100%;
+}
+
+.addForm{
+    text-align: center;
+}
+
+.all-input{
+display:flex;
+justify-content: center;
+}
+
+
+
+.event-message{
+    display:flex;
+    box-sizing: border-box;
+    padding: 0;
+    color: rgba(0,0,0,.85);
+    font-size: 14px;
+    font-variant: tabular-nums;
+    line-height: 1.5715;
+    list-style: none;
+    font-feature-settings: "tnum","tnum";
+    position: fixed;
+    z-index: 1010;
+    margin: 0 24px 0 0;
+    background-color: rgb(177, 112, 112);
+}
