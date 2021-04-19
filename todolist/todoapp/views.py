@@ -2,12 +2,26 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .models import Todoitem
+from django.core.paginator import Paginator, EmptyPage
 
 # Create your views here.
 def index(request):
     todo_item_list = Todoitem.objects.all()
+
+    p =Paginator(todo_item_list, 2)
+
+
+
+    page_num = request.GET.get('page', 1)
+
+    try:
+        page = p.page(page_num)
+    except EmptyPage:
+        page = p.page(1)
+
+
     return render(request, 'index.html', {
-        'todo_item_list': todo_item_list
+        'todo_item_list': page,
     })
 
 def additem(request):

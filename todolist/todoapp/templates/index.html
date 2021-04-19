@@ -16,6 +16,10 @@
        <span>TODO Added</span>
        <i class="fas fa-times"></i>
    </div>
+    <div class="alert alert-info" role="alert">
+         A simple info alert—check it out!
+    </div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     <div class="container">
         <div class="header grid">
             <div class="title">Title</div>
@@ -52,9 +56,20 @@
             <br>
         </div>
         <div class="pagination">
-            <button class="PrevBtn"><</button>
-            <button class="PageBtn">1</button>
-            <button class="NextBtn">></button>
+            {% if todo_item_list.has_previous %}
+            <a class="PrevBtn" href="{% url 'todoapp:_index_' %}?page={{todo_item_list.previous_page_number}}"><</a>
+            {% endif %}
+            {% block pagin %}
+            {% for p in todo_item_list.page_range %}
+            <a class="PageBtn" href="{% url 'todoapp:_index_' %}?page={{p}}">{{p}}</a>
+            {% endfor %}
+            {% endblock %}
+            <span class="current">
+                Page {{ todo_item_list.number }} of {{ todo_item_list.paginator.num_pages }}.
+            </span>
+            {% if todo_item_list.has_next %}
+            <a class="NextBtn" href="{% url 'todoapp:_index_' %}?page={{todo_item_list.next_page_number}}">></a>
+            {% endif %}
         </div>
         {% block add%}
         <div class="addtodoitem">
@@ -141,7 +156,9 @@ filterClick.addEventListener('click', ()=>{
 <!--        alert(http.responseText);-->
 <!--    }-->
 <!--}-->
-
+var alertNode = document.querySelector('.alert')
+var alert = bootstrap.Alert.getInstance(alertNode)
+alert.close()
 
 </script>
 </body>
