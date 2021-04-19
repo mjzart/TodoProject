@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/b199ddb6a4.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
     <title>todoList</title>
@@ -11,20 +12,18 @@
     <link rel="stylesheet" href="{% static 'style.css'%}">
 </head>
 <body>
-    <div class="event-message hide">
-       <i class="far fa-check-circle"></i>
-       <span>TODO Added</span>
-       <i class="fas fa-times"></i>
-   </div>
-    <div class="alert alert-info" role="alert">
-         A simple info alert—check it out!
+    <div class="event-message hide" role="alert" >
+         <i class="far fa-check-circle"></i>
+         <span>TODO Added</span>
+        <span class="close"><i class="fas fa-times"></i></span>
+
     </div>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
     <div class="container">
         <div class="header grid">
             <div class="title">Title</div>
             <div class="filter">
-                <i class="fas fa-filter"></i>
+                <i class="fas fa-filter red"></i>
                <div class="filter-form hide">
                    <form class ="form-filter-center">
                        <input type="checkbox" id="filter-check">
@@ -43,11 +42,11 @@
                 <div class="itemDate {{a.item_done}}"><span>{{a.item_data}}</span></div>
                 <div class="itemAction">
                     <div>
-                        <a href="{% url 'todoapp:complete_item' a.id %}" class="complete Btn">Complete</a>
+                        <a href="{% url 'todoapp:complete_item' a.id %}" class="complete btn btn-primary">Complete</a>
                     </div>
-                    <br>
+
                     <div>
-                        <a href="{% url 'todoapp:delete_item' a.id %}" class="delete Btn" >Delete</a>
+                        <a href="{% url 'todoapp:delete_item' a.id %}" class="delete btn btn-danger" >Delete</a>
                     </div>
                 </div>
             </div>
@@ -56,19 +55,30 @@
             <br>
         </div>
         <div class="pagination">
+            <ul class="pagination">
             {% if todo_item_list.has_previous %}
-            <a class="PrevBtn" href="{% url 'todoapp:_index_' %}?page={{todo_item_list.previous_page_number}}"><</a>
+            <li class="page-item">
+                <a class="page-link" href="{% url 'todoapp:_index_' %}?page={{todo_item_list.previous_page_number}}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
             {% endif %}
             {% block pagin %}
             {% for p in todo_item_list.page_range %}
             <a class="PageBtn" href="{% url 'todoapp:_index_' %}?page={{p}}">{{p}}</a>
             {% endfor %}
             {% endblock %}
-            <span class="current">
-                Page {{ todo_item_list.number }} of {{ todo_item_list.paginator.num_pages }}.
-            </span>
+            <li class="page-item"><a class="page-link" href="#">{{ todo_item_list.number }}</a></li>
+<!--            <span class="current">-->
+<!--&lt;!&ndash;                Page {{ todo_item_list.number }} of {{ todo_item_list.paginator.num_pages }}.&ndash;&gt;-->
+<!--            </span>-->
             {% if todo_item_list.has_next %}
-            <a class="NextBtn" href="{% url 'todoapp:_index_' %}?page={{todo_item_list.next_page_number}}">></a>
+                <li class="page-item">
+                    <a class="page-link" href="{% url 'todoapp:_index_' %}?page={{todo_item_list.next_page_number}}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+
             {% endif %}
         </div>
         {% block add%}
@@ -79,14 +89,15 @@
                 {% csrf_token %}
             <div class="all-input">
                 <label for="titletext">Title:</label>
-                <input type="text" id="titletext" name = "item_title" style="width: 35%;">
+                <input type="text" id="titletext" name = "item_title" style="width: 45%; margin:5px;">
+                <div class="hide warning"><h2>Length must be more than 5</h2></div>
                 <div class="dataContent hide">
                     <label for="date">Select a date:</label>
                     <input type="date" name="date" id="date" >
                 </div>
             </div>
                 <br>
-                <input type="submit" value="Add TODO" class="addBtn">
+                <input type="submit" value="Add TODO" class="addBtn" >
             </form>
         </div>
         {% endblock %}
@@ -113,12 +124,15 @@ let filter = document.querySelector("#filter-check");
 
 let titleInput = document.getElementById('titletext');
 let dataContent = document.getElementsByClassName('dataContent')[0]
+let warning = document.getElementsByClassName('warning')[0]
 titleInput.addEventListener('input', ()=>{
     if (titleInput.value.length >= 5){
+        warning.classList.add("hide")
         if (dataContent.classList.contains("hide")){
             dataContent.classList.remove("hide")
         }
     } else{
+        warning.classList.remove("hide")
         if (!dataContent.classList.contains("hide")){
             dataContent.classList.add("hide")
         }
@@ -156,9 +170,30 @@ filterClick.addEventListener('click', ()=>{
 <!--        alert(http.responseText);-->
 <!--    }-->
 <!--}-->
-var alertNode = document.querySelector('.alert')
-var alert = bootstrap.Alert.getInstance(alertNode)
-alert.close()
+
+
+let add = document.getElementsByClassName('addBtn')[0]
+let alert = document.getElementsByClassName('event-message')[0]
+let close = document.getElementsByClassName('close')[0]
+let addForm = getElementsByClassName('addForm')[0]
+addForm.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    let response = await fetch('todoapp/additem/', {
+      method: 'POST',
+      body: new FormData(addForm)
+    });
+
+    alert.classList.remove('hide');
+    alert.classList.add('slide-right');
+    setTimeout(function(){
+        alert.classList.add('hide');
+        alert.classList.remove('slide-right');
+    }, 2000);
+})
+close.addEventListener('click', ()=>{
+    alert.classList.add('hide');
+    alert.classList.remove('slide-right');
+})
 
 </script>
 </body>

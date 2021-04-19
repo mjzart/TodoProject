@@ -8,7 +8,7 @@ from django.core.paginator import Paginator, EmptyPage
 def index(request):
     todo_item_list = Todoitem.objects.all()
 
-    p =Paginator(todo_item_list, 2)
+    p =Paginator(todo_item_list, 4)
 
 
 

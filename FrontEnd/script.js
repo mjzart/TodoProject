@@ -53,3 +53,16 @@ filterClick.addEventListener('click', ()=>{
     }  
     }
 })
+
+
+let add = document.getElementsByClassName('addBtn')[0]
+let alert = document.getElementsByClassName('event-message')[0]
+let close = document.getElementsByClassName('close')[0]
+add.addEventListener('click', ()=>{
+    alert.classList.remove('hide');
+    alert.classList.add('slide-right');     
+})
+close.addEventListener('click', ()=>{
+    alert.classList.add('hide');
+    alert.classList.remove('slide-right');     
+})
