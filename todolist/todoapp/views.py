@@ -40,3 +40,4 @@ def complete_item(request, id):
     a.item_done = 'done'
     a.save()
     return HttpResponseRedirect(reverse('todoapp:_index_'))
+

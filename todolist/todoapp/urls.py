@@ -1,5 +1,5 @@
 from django.urls import path
-
+import include
 from . import views
 
 app_name = 'todoapp'
@@ -8,4 +8,5 @@ urlpatterns = [
     path('additem/', views.additem, name = 'additem'),
     path('deleteitem/<id>', views.delete_item, name='delete_item'),
     path('completeitem/<id>', views.complete_item, name='complete_item'),
+
 ]
