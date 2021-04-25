@@ -3,10 +3,13 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .models import Todoitem
 from django.core.paginator import Paginator, EmptyPage
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required(login_url='/accounts/login/')
 def index(request):
-    todo_item_list = Todoitem.objects.all()
+    todo_item_list = Todoitem.objects.filter(user=request.user)
 
     p =Paginator(todo_item_list, 4)
 
@@ -25,7 +28,7 @@ def index(request):
     })
 
 def additem(request):
-    item = Todoitem(item_title = request.POST['item_title'], item_data = request.POST['date'], item_done = ' ')
+    item = Todoitem(user = request.user, item_title = request.POST['item_title'], item_data = request.POST['date'], item_done = ' ')
     print(request.POST['date'])
     item.save()
     return HttpResponseRedirect( reverse('todoapp:_index_'))
